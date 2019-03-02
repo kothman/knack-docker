@@ -4,6 +4,13 @@ services:
    app:
       build: .
       volumes:
-         - ./knack:/app
+        - ./knack/.env.js:/app/.env.js
+        - ./knack/src:/app/src
+        - ./knack/dist:/app/dist
+        - ./knack/server.js:/app/server.js
+        - ./knack/routes.js:/app/routes.js
+        - ./knack/webpack.config.js:/app/webpack.config.js
+        - ./knack/base.webpack.config.js:/app/base.webpack.config.js
+        - ./knack/dev.webpack.config.js:/app/dev.webpack.config.js
       ports:
-         - "8080:8080"
+         - "3000:3000"

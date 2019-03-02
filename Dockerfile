@@ -1,22 +1,17 @@
-FROM node:lts-alpine
+FROM node:10-jessie
 
-# install simple http server for serving static content
-# RUN npm install -g http-server
+ENV NODE_ENV development
+
+# Update packages and install python
+RUN apt update && apt install -y python emacs make g++
 
 # make the 'app' folder the current working directory
 WORKDIR /app
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY ./knack/package*.json ./
-
-# install project dependencies
-RUN npm install
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY ./knack .
 
-# build app for production with minification
-RUN npm run build
+RUN mkdir dist
+RUN yarn install
+RUN yarn run build
 
-# EXPOSE 8080
-# CMD [ "http-server", "dist" ]
+CMD yarn run start
